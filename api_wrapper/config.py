@@ -1,6 +1,5 @@
 class Config:
     # Basis-URLs
-    BASE_URL_FORECAST = "https://api.open-meteo.com/v1/forecast"
     BASE_URL_HISTORICAL = "https://archive-api.open-meteo.com/v1/archive"
     BASE_URL_HISTORICAL_FORECAST = "https://historical-forecast-api.open-meteo.com/v1/forecast"
 

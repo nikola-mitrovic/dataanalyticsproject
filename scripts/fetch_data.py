@@ -39,14 +39,16 @@ def main():
         max_length = len(timestamps)
         df_forecast = pd.DataFrame({"datetime": pd.to_datetime(timestamps)})
 
+        # Exakte Feldnamen aus Config verwenden
         for var in Config.HISTORICAL_FORECAST_VARIABLES:
             df_forecast[var] = hourly_data.get(var, [pd.NA] * max_length)
 
         # Datenbereinigung und Kategorien hinzufügen
         df_forecast = DataHandler.clean_data(df_forecast)
         df_forecast = DataHandler.handle_missing_values(df_forecast)
-        df_forecast = DataHandler.add_temperature_category(df_forecast)
-        df_forecast = DataHandler.add_precipitation_category(df_forecast)
+
+        # Spaltenreihenfolge sicherstellen
+        df_forecast = df_forecast[Config.HISTORICAL_FORECAST_VARIABLES]
 
         # CSV speichern
         DataHandler.save_to_csv(df_forecast, os.path.join(output_dir, "historical_forecast_data.csv"))
@@ -69,14 +71,16 @@ def main():
         max_length = len(timestamps)
         df_historical = pd.DataFrame({"datetime": pd.to_datetime(timestamps)})
 
+        # Exakte Feldnamen aus Config verwenden
         for var in Config.HISTORICAL_VARIABLES:
             df_historical[var] = hourly_data.get(var, [pd.NA] * max_length)
 
         # Datenbereinigung und Kategorien hinzufügen
         df_historical = DataHandler.clean_data(df_historical)
         df_historical = DataHandler.handle_missing_values(df_historical)
-        df_historical = DataHandler.add_temperature_category(df_historical)
-        df_historical = DataHandler.add_precipitation_category(df_historical)
+
+        # Spaltenreihenfolge sicherstellen
+        df_historical = df_historical[Config.HISTORICAL_VARIABLES]
 
         # CSV speichern
         DataHandler.save_to_csv(df_historical, os.path.join(output_dir, "historical_weather_data.csv"))
